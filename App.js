@@ -35,9 +35,7 @@ export default class App extends React.Component {
   }
 
   movieNameInputSubmitted = () => {
-    console.debug("the input is: " + this.state.movieNameInput + " the movie is: " + this.state.movie )
     const apiKey = 'e9743662f5a39568d8e25225f2c97e09'
-
     let url = "http://api.themoviedb.org/3/search/movie?query=" + this.state.movieNameInput
     url   += "&api_key=" + apiKey
     url   += "&language=en-US&page=1&include_adult=false"
@@ -45,7 +43,7 @@ export default class App extends React.Component {
 
     fetch(url).then(response => response.json()).then(json => {
       console.log(json)
-      this.setState({movie: json.results[0]
+      this.setState({ movieNameInput: "", movie: json.results[0]
       });
     });
   }
@@ -54,11 +52,12 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput style={styles.movieNameInput}
-                   placeholder="Enter a movie name!"
-                   placeholderTextColor="#aaa"
-                   onChangeText={this.movieNameInputChanged}
-                   onSubmitEditing={this.movieNameInputSubmitted}
-                   autoFocus={true} />
+            placeholder="Enter a movie name!"
+            placeholderTextColor="#aaa"
+            onChangeText={this.movieNameInputChanged}
+            onSubmitEditing={this.movieNameInputSubmitted}
+            autoFocus={true}
+            value={this.state.movieNameInput} />
         {/*Conditionally show the Movie component, only if there's a movie in state (so not initially)*/}
         {this.state.movie && <Movie  movie={this.state.movie} />}
       </View>
